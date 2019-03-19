@@ -1,31 +1,19 @@
-const Vue = require('vue')
+// const Vue = require('vue')
 const server = require('express')()
-const renderer = require('vue-server-renderer').createRenderer({
-    template: require('fs').readFileSync('./index.template.html', 'utf-8')
-})
+const renderer = require('vue-server-renderer').createRenderer()
+const createApp = require('./app.js')
 server.get('*', (req,res) => {
-  const app = new Vue({
-    data:{
-      url:req.url
-    },
-    template:`<div>访问的 URL 是： {{ url }}</div>`
-  })
   const context = {
-    title: 'hbb',
-    meta: `
-    <meta name="keywords" content="苹果iPhone维修,华为手机维修,小米手机维修,手机上门维修,ipad维修,MacBook Air维修,iMac维修,智能设备维修预约">
-    `
+    url: req.url,
+    title: 'hbb'
   }
-  renderer.renderToString(app,context, (err, html) => {
+  const app = createApp(context)
+  renderer.renderToString(app, (err, html) => {
     if(err){
       res.status(500).end('Internal server Error')
       return
     }
-    res.end(`<!DOCTYPE html>
-    <html lang="en">
-      <head><title>Hello</title></head>
-      <body>${html}</body>
-    </html>`)
+    res.end(html)
   })
 })
 server.listen(8081)
