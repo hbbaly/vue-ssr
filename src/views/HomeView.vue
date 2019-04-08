@@ -9,9 +9,10 @@
 <script>
 import {mapGetters} from 'vuex'
 import titleMixin from '../utils/title'
+import metaMixin from '../utils/meta'
 export default {
   name: 'item-view',
-  mixins: [titleMixin],
+  mixins: [titleMixin,metaMixin],
   data(){
     return{
       item:{
@@ -25,6 +26,15 @@ export default {
   },
   title(){
     return this.item.title
+  },
+  meta(){
+    return [{
+      name:'CNode',
+      content:'Vue CNode ssr'
+    },{
+      name:'CNode',
+      content:'Vue CNode ssr'
+    }]
   },
 
   // We only fetch the item itself before entering the view, because

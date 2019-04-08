@@ -99,6 +99,7 @@ function render (req, res) {
 
   const context = {
     title: 'Vue cnode', // default title
+    meta: [],
     url: req.url
   }
   renderer.renderToString(context, (err, html) => {
