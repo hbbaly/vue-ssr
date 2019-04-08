@@ -8,14 +8,23 @@
 
 <script>
 import {mapGetters} from 'vuex'
+import titleMixin from '../utils/title'
 export default {
   name: 'item-view',
-  data: () => ({
-    loading: true
-  }),
+  mixins: [titleMixin],
+  data(){
+    return{
+      item:{
+        title:'CNode'
+      }
+    }
+  },
 
   computed: {
     ...mapGetters(['topicList'])
+  },
+  title(){
+    return this.item.title
   },
 
   // We only fetch the item itself before entering the view, because
@@ -31,7 +40,7 @@ export default {
   // refetch comments if item changed
 
   mounted(){
-    console.log(this.topicList,'topicList');
+    console.log(this.topicList,'topicList',this);
     
   },
   methods: {
